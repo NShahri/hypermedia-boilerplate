@@ -1,0 +1,27 @@
+{
+  "name": "hypermedia-api",
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "Nima Shahri",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "bunyan": "^1.8.12",
+    "restify": "^6.3.4",
+    "restify-errors": "^5.0.0",
+    "uuid": "^3.2.1"
+  },
+  "scripts": {
+    "start": "node ./build/index.js",
+    "build": "./node_modules/.bin/babel . --out-dir build --ignore build",
+    "now-build": ""
+  },
+  "engines": {
+    "node": ">=8.9.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.38",
+    "@babel/core": "^7.0.0-beta.38",
+    "@babel/preset-env": "^7.0.0-beta.38"
+  }
+}
