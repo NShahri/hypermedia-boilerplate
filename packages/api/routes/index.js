@@ -1,9 +1,10 @@
 import registerMovieRoutes from './movies';
 import RouteNames from './routeNames';
+import handlerConnector from "./handlerConnector";
+import cachePolicy from "./cachePolicy";
+import cacheConnector from "./cacheConnector";
 
-const getRootHandler = server => (req, res, next) => {
-    console.log(this);
-
+function getRootHandler(req, res, next, server) {
     res.send({
         links: [
             server.hypermediaUrl.createSelfLink(req),
@@ -12,10 +13,13 @@ const getRootHandler = server => (req, res, next) => {
     });
 
     return next();
-};
+}
 
 export default function setupRoutes(server) {
-    server.get({name: RouteNames.root, path: '/'}, getRootHandler(server));
+    server.get(
+        {name: RouteNames.root, path: '/'},
+        cacheConnector(cachePolicy.apiRootCachePolicy),
+        handlerConnector(getRootHandler));
 
     registerMovieRoutes(server);
 }

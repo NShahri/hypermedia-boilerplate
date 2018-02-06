@@ -1,22 +1,12 @@
 import {getMovie, getMovies} from "../domain/movies";
-import {ResourceNotFoundError, InternalError} from 'restify-errors';
+import {InternalError, ResourceNotFoundError} from 'restify-errors';
 import RouteNames from './routeNames';
-import config from "../infrastructure/config";
 import cachePolicy from './cachePolicy';
 import cacheConnector from "./cacheConnector";
+import jwt from 'express-jwt';
+import handlerConnector from "./handlerConnector";
 
-function handlerConnector(handler) {
-    return function (req, res, next) {
-        try {
-            handler.call(this, req, res, next, this);
-        }
-        catch (e) {
-            next(new InternalError(config.isProduction ? 'Unexpected error.' : e));
-        }
-    };
-}
-
-function getMoviesHandler (req, res, next, server) {
+function getMoviesHandler(req, res, next, server) {
     res.send({
         links: [
             server.hypermediaUrl.createSelfLink(req),
@@ -28,7 +18,7 @@ function getMoviesHandler (req, res, next, server) {
     return next();
 }
 
-function getMovieHandler (req, res, next, server) {
+function getMovieHandler(req, res, next, server) {
     let movie = getMovie(req.params.id);
 
     if (movie) {
@@ -46,6 +36,15 @@ function getMovieHandler (req, res, next, server) {
 }
 
 export default function registerRoutes(server) {
-    server.get({name: RouteNames.movies, path: '/movie'}, cacheConnector(cachePolicy.privateLongCachePolicy), handlerConnector(getMoviesHandler));
-    server.get({name: RouteNames.movie, path: '/movie/:id'}, cacheConnector(cachePolicy.privateShortCachePolicy), handlerConnector(getMovieHandler));
+    server.get(
+        {name: RouteNames.movies, path: '/movie'},
+        jwt({secret: 'shhhhhhared-secret'}),
+        cacheConnector(cachePolicy.privateLongCachePolicy),
+        handlerConnector(getMoviesHandler));
+
+
+    server.get(
+        {name: RouteNames.movie, path: '/movie/:id'},
+        cacheConnector(cachePolicy.privateShortCachePolicy),
+        handlerConnector(getMovieHandler));
 }

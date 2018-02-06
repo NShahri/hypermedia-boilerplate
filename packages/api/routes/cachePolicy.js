@@ -5,6 +5,14 @@ export default {
     },
 
     /** @type CachePolicy **/
+    apiRootCachePolicy: {
+        private: true,
+        store: true,
+        vary: 'content-type',
+        maxAge: 24 * 60 * 60 /* 1 day */,
+    },
+
+    /** @type CachePolicy **/
     privateLongCachePolicy: {
         private: true,
         store: true,
