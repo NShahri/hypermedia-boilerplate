@@ -3,8 +3,8 @@ import {InternalError, ResourceNotFoundError} from 'restify-errors';
 import RouteNames from './routeNames';
 import cachePolicy from './cachePolicy';
 import cacheConnector from "./cacheConnector";
-import jwt from 'express-jwt';
 import handlerConnector from "./handlerConnector";
+import authProvider from "../infrastructure/authProvider";
 
 function getMoviesHandler(req, res, next, server) {
     res.send({
@@ -38,13 +38,14 @@ function getMovieHandler(req, res, next, server) {
 export default function registerRoutes(server) {
     server.get(
         {name: RouteNames.movies, path: '/movie'},
-        jwt({secret: 'shhhhhhared-secret'}),
+        authProvider,
         cacheConnector(cachePolicy.privateLongCachePolicy),
         handlerConnector(getMoviesHandler));
 
 
     server.get(
         {name: RouteNames.movie, path: '/movie/:id'},
+        authProvider,
         cacheConnector(cachePolicy.privateShortCachePolicy),
         handlerConnector(getMovieHandler));
 }

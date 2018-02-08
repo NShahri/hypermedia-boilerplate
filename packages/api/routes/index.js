@@ -3,6 +3,7 @@ import RouteNames from './routeNames';
 import handlerConnector from "./handlerConnector";
 import cachePolicy from "./cachePolicy";
 import cacheConnector from "./cacheConnector";
+import authProvider from "../infrastructure/authProvider";
 
 function getRootHandler(req, res, next, server) {
     res.send({
@@ -18,6 +19,7 @@ function getRootHandler(req, res, next, server) {
 export default function setupRoutes(server) {
     server.get(
         {name: RouteNames.root, path: '/'},
+        authProvider,
         cacheConnector(cachePolicy.apiRootCachePolicy),
         handlerConnector(getRootHandler));
 
