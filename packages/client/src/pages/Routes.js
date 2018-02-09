@@ -3,9 +3,15 @@ import {Route, Switch, BrowserRouter as Router, Redirect} from 'react-router-dom
 import Home from "../pages/Home";
 import Callback from "../pages/Callback";
 import Login from '../pages/Login';
-import PrivateRoute from "../auth/PrivateRoute";
-import authProvider from "../auth/authProvider";
+import authProvider from "../infrastructure/authProvider";
 import Movie from "./Movie";
+
+const PrivateRoute = props => {
+    let isAuthenticated = authProvider.isAuthenticated();
+    return (
+        isAuthenticated ? <Route {...props} /> : <Redirect to="/"/>
+    );
+};
 
 export default function (props) {
     return <Router>

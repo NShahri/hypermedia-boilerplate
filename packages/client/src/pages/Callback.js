@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import authProvider from "../auth/authProvider";
+import authProvider from "../infrastructure/authProvider";
 import {Redirect} from 'react-router-dom';
 import {CircularProgress} from 'material-ui/Progress';
 
