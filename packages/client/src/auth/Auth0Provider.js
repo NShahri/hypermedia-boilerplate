@@ -81,7 +81,6 @@ class Auth0Provider {
     }
 
     isAuthenticated() {
-        console.log('get session', this.authInfo);
         return this.authInfo.expiresAt ? new Date().getTime() < this.authInfo.expiresAt : false;
     }
 
