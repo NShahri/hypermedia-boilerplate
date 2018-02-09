@@ -8,7 +8,7 @@ function setupCors(server){
     const cors = corsMiddleware({
         preflightMaxAge: 600, // 10 minutes
         origins: ['http://localhost:3000'],
-        //allowHeaders: ['API-Token'],
+        allowHeaders: ['Authorization'],
         //exposeHeaders: ['API-Token-Expiry']
     });
 
