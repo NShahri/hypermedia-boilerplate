@@ -2,6 +2,19 @@ import restify from 'restify';
 import logger from "../infrastructure/logger";
 import {URL} from 'url';
 import HypermediaUrl from "./HypermediaUrl";
+import corsMiddleware from 'restify-cors-middleware';
+
+function setupCors(server){
+    const cors = corsMiddleware({
+        preflightMaxAge: 600, // 10 minutes
+        origins: ['http://localhost:3000'],
+        //allowHeaders: ['API-Token'],
+        //exposeHeaders: ['API-Token-Expiry']
+    });
+
+    server.pre(cors.preflight);
+    server.use(cors.actual);
+}
 
 /**
  *
@@ -33,6 +46,8 @@ export default function setupServer(port, baseUrl) {
     // http://restify.com/docs/plugins-api/#requestlogger
     //
     server.use(restify.plugins.requestLogger());
+
+    setupCors(server);
 
     server.listen(port, () => {
         logger.info({
