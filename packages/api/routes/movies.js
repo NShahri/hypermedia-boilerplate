@@ -1,5 +1,5 @@
 import {getMovie, getMovies} from "../domain/movies";
-import {InternalError, ResourceNotFoundError} from 'restify-errors';
+import {ResourceNotFoundError} from 'restify-errors';
 import RouteNames from './routeNames';
 import cachePolicy from './cachePolicy';
 import cacheConnector from "./cacheConnector";
