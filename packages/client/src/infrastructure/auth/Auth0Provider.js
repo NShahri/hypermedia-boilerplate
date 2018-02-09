@@ -4,9 +4,11 @@ class Auth0Provider {
     /**
      * @constructor
      * @param config
+     * @param logger
      */
-    constructor(config) {
+    constructor(config, logger) {
         this.config = config;
+        this.logger = logger;
     }
 
     /**
@@ -17,7 +19,7 @@ class Auth0Provider {
         accessToken: null,
         idToken: null,
         expiresAt: null
-    }
+    };
 
     auth0 = null;
 
@@ -43,6 +45,8 @@ class Auth0Provider {
             idToken: authResult.idToken,
             expiresAt: authResult.expiresIn * 1000 + new Date().getTime()
         };
+
+        this.logger.debug({type: 'NEW_AUTH_SESSION', idToken: this.authInfo.idToken, expiresAt: this.authInfo.expiresAt}, 'New auth session provided.');
     }
 
     /**
