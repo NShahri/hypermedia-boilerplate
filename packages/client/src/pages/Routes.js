@@ -5,6 +5,7 @@ import Callback from "../pages/Callback";
 import Login from '../pages/Login';
 import PrivateRoute from "../auth/PrivateRoute";
 import authProvider from "../auth/authProvider";
+import Movie from "./Movie";
 
 export default function (props) {
     return <Router>
@@ -12,6 +13,7 @@ export default function (props) {
             <Route path="/callback" render={props => <Callback {...props} />}/>
             <Route path="/login" render={props => <Login {...props} />}/>
             <PrivateRoute path="/home" render={props => <Home {...props}/>}/>
+            <Route path="/movie" render={props => <Movie {...props}/>}/>
 
             <Route render={() => <Redirect to={authProvider.isAuthenticated() ? "/home" : "/login"}/>}/>
         </Switch>
