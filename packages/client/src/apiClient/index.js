@@ -1,8 +1,5 @@
 import authProvider from "../infrastructure/authProvider";
-import CollectionJsonAdapter from "./CollectionJsonAdapter";
-import traverson from 'traverson';
-
-traverson.registerMediaType(CollectionJsonAdapter.mediaType, CollectionJsonAdapter);
+import traverson, {CollectionJsonAdapter} from "./CollectionJsonAdapter";
 
 function getApiUrlFromPage() {
     return document
@@ -23,7 +20,7 @@ class ApiClient {
 
     getResource() {
         return new Promise((fulfill, reject) => {
-            this.rest.getResource((error, document, traversal) => {
+            this.rest.getResource((error, document) => {
                 if (error) {
                     reject(error);
                 }
@@ -52,6 +49,7 @@ class ApiClient {
                 .withRequestOptions({
                     headers: {
                         'content-type': 'application/x-www-form-urlencoded',
+                        'Accept': CollectionJsonAdapter.mediaType,
                         'Authorization': `Bearer ${authProvider.authInfo.accessToken}`
                     }
 

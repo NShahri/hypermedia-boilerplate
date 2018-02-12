@@ -1,7 +1,7 @@
 import traverson from 'traverson';
 
-export default class CollectionJsonAdapter {
-    static mediaType = 'application/json';
+export class CollectionJsonAdapter {
+    static mediaType = 'application/vnd.collection+json';
 
     constructor(log) {
         this.log = log;
@@ -86,4 +86,6 @@ export default class CollectionJsonAdapter {
     }
 }
 
+traverson.registerMediaType(CollectionJsonAdapter.mediaType, CollectionJsonAdapter);
 
+export default traverson;
