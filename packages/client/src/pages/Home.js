@@ -66,7 +66,7 @@ class Home extends Component {
                 {!movies.collection.length && <button onClick={() => this.onMoviesRequest()}>Get movies list</button>}
                 {movies.collection.length > 0 && this.renderMovies(movies.collection)}
                 <div>
-                    {errors.map(e => <div>{e}</div>)}
+                    {errors.map((e, index) => <div key={index}>{e.message}</div>)}
                 </div>
             </div>
         );
