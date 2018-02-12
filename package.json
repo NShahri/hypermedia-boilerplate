@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "author": "Nima Shahri",
   "main": "./packages/client/src/index",
-  "private": true,
+  "license": "MIT",
   "workspaces": [
     "packages/*"
   ]
