@@ -36,6 +36,7 @@ function getMovieHandler(req, res, next, server) {
 }
 
 export default function registerRoutes(server) {
+
     server.get(
         {name: RouteNames.movies, path: '/movie'},
         authProvider,
