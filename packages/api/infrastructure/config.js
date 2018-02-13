@@ -1,5 +1,7 @@
 export default {
     appName: 'hypermedia-api',
+    appVersion: '0.0.0',
+
     logLevel: 'trace',
 
     serverPort: 8080,
