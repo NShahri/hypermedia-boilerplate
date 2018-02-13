@@ -9,7 +9,7 @@
  * @property vary {string} determines how to match future request headers to decide whether a cached response can be used rather than requesting a fresh one from the origin server.
  */
 
-import config from "../infrastructure/config";
+import config from "../../infrastructure/config";
 
 /**
  * validate and fix cache policy with right values

@@ -1,6 +1,6 @@
-import cachePolicy from "./cachePolicy";
-import handlerConnector from "./handlerConnector";
-import cacheConnector from "./cacheConnector";
+import cachePolicy from "./cacheProvider/cachePolicy";
+import contextConnector from "./contextProvider";
+import cacheConnector from "./cacheProvider";
 import RouteNames from "./routeNames";
 import config from "../infrastructure/config";
 
@@ -23,5 +23,5 @@ export default function registerRoutes(server) {
     server.get(
         {name: RouteNames.health, path: '/health'},
         cacheConnector(cachePolicy.publicVeryShortCachePolicy),
-        handlerConnector(pingHandler));
+        contextConnector(pingHandler));
 }

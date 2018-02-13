@@ -1,9 +1,9 @@
 import {getMovie, getMovies} from "../domain/movies";
 import {ResourceNotFoundError} from 'restify-errors';
 import RouteNames from './routeNames';
-import cachePolicy from './cachePolicy';
-import cacheConnector from "./cacheConnector";
-import handlerConnector from "./handlerConnector";
+import cachePolicy from './cacheProvider/cachePolicy';
+import cacheConnector from "./cacheProvider";
+import contextConnector from "./contextProvider";
 import authProvider from "../infrastructure/authProvider";
 
 function getMoviesHandler(req, res, next, server) {
@@ -41,12 +41,12 @@ export default function registerRoutes(server) {
         {name: RouteNames.movies, path: '/movie'},
         authProvider,
         cacheConnector(cachePolicy.privateLongCachePolicy),
-        handlerConnector(getMoviesHandler));
+        contextConnector(getMoviesHandler));
 
 
     server.get(
         {name: RouteNames.movie, path: '/movie/:id'},
         authProvider,
         cacheConnector(cachePolicy.privateShortCachePolicy),
-        handlerConnector(getMovieHandler));
+        contextConnector(getMovieHandler));
 }
