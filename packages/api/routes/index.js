@@ -1,9 +1,9 @@
 import registerMovieRoutes from './movies';
 import registerHealthRoutes from './health';
 import RouteNames from './routeNames';
-import handlerConnector from "./handlerConnector";
-import cachePolicy from "./cachePolicy";
-import cacheConnector from "./cacheConnector";
+import contextConnector from "./contextProvider";
+import cachePolicy from "./cacheProvider/cachePolicy";
+import cacheConnector from "./cacheProvider";
 import authProvider from "../infrastructure/authProvider";
 
 function getRootHandler(req, res, next, server) {
@@ -22,7 +22,7 @@ export default function setupRoutes(server) {
         {name: RouteNames.root, path: '/'},
         authProvider,
         cacheConnector(cachePolicy.apiRootCachePolicy),
-        handlerConnector(getRootHandler));
+        contextConnector(getRootHandler));
 
     registerMovieRoutes(server);
     registerHealthRoutes(server);
