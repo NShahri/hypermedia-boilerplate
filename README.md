@@ -6,7 +6,7 @@ Hypermedia boilerplate using nodejs, [Restify](http://restify.com/) as server, a
 - Client side cache policy
 - Logging for client and api
 - [Auth0](https://auth0.com/) support (username: admin, password: admin)
-    - Implicit flow for SPA 
+    - [OIDC Implicit](http://openid.net/specs/openid-connect-core-1_0.html#ImplicitFlowAuth) flow for single page app (SPA)
     - hypermedia server has to be hosted on <http://localhost:8080>
     - Client should be server from <http://localhost:3000>
 - CORS support

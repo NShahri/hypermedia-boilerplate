@@ -18,7 +18,7 @@ function getMoviesHandler(req, res, next, server) {
     return next();
 }
 
-function getMovieHandler(req, res, next, server) {
+const getMovieHandler = (req, res, next, server) => {
     let movie = getMovie(req.params.id);
 
     if (movie) {
@@ -33,7 +33,7 @@ function getMovieHandler(req, res, next, server) {
     }
 
     return next(new ResourceNotFoundError('Not found'));
-}
+};
 
 export default function registerRoutes(server) {
 
