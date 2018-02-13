@@ -1,4 +1,5 @@
 import config from "../infrastructure/config";
+import {InternalError} from 'restify-errors';
 
 export default function handlerConnector(handler) {
     return function (req, res, next) {

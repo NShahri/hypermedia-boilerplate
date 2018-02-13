@@ -1,8 +1,13 @@
 import {URL} from 'url';
 
 const selfLinkName = 'self';
-const upLinkName= 'up';
+const upLinkName = 'up';
 
+/**
+ * This helper can generate links and feeds based on Collection+JSON hypermedia media type
+ *
+ * @see http://amundsen.com/media-types/collection/
+ */
 export default class HypermediaUrl {
     constructor(server, baseUrl) {
         this.server = server;
@@ -37,6 +42,6 @@ export default class HypermediaUrl {
     }
 
     createFeed(collection = [], routeName) {
-        return collection.map(m => this.routeUrl(routeName, m));
+        return collection.map(m => ({href: this.routeUrl(routeName, m)}));
     }
 }

@@ -1,4 +1,5 @@
 import registerMovieRoutes from './movies';
+import registerHealthRoutes from './health';
 import RouteNames from './routeNames';
 import handlerConnector from "./handlerConnector";
 import cachePolicy from "./cachePolicy";
@@ -24,4 +25,5 @@ export default function setupRoutes(server) {
         handlerConnector(getRootHandler));
 
     registerMovieRoutes(server);
+    registerHealthRoutes(server);
 }

@@ -26,6 +26,13 @@ export default {
         store: true,
         vary: 'content-type',
         maxAge: 15 * 60 /* 15 min */,
+    },
+
+    publicVeryShortCachePolicy: {
+        private: false,
+        store: true,
+        vary: 'content-type',
+        maxAge: 5 /* 5 sec */,
     }
 }
 

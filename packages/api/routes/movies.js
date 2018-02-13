@@ -1,5 +1,5 @@
 import {getMovie, getMovies} from "../domain/movies";
-import {InternalError, ResourceNotFoundError} from 'restify-errors';
+import {ResourceNotFoundError} from 'restify-errors';
 import RouteNames from './routeNames';
 import cachePolicy from './cachePolicy';
 import cacheConnector from "./cacheConnector";
@@ -18,7 +18,7 @@ function getMoviesHandler(req, res, next, server) {
     return next();
 }
 
-function getMovieHandler(req, res, next, server) {
+const getMovieHandler = (req, res, next, server) => {
     let movie = getMovie(req.params.id);
 
     if (movie) {
@@ -33,9 +33,10 @@ function getMovieHandler(req, res, next, server) {
     }
 
     return next(new ResourceNotFoundError('Not found'));
-}
+};
 
 export default function registerRoutes(server) {
+
     server.get(
         {name: RouteNames.movies, path: '/movie'},
         authProvider,

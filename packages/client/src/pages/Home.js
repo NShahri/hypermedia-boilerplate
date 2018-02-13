@@ -1,12 +1,74 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import ApiClient from '../apiClient';
 
 class Home extends Component {
-    render() {
+
+    state = {
+        movies: {
+            collection: []
+        },
+        errors: []
+    };
+
+    async onMoviesRequest() {
+        try {
+            let r = await
+                ApiClient
+                    .getClient()
+                    .follow('movies')
+                    .getResource();
+
+            this.setState({movies: {...this.state.movies, collection: r.document.items.map(i => i.href)}});
+        }
+        catch (error) {
+            this.setState({errors: [...this.state.errors, error]});
+        }
+    }
+
+    async onMovieDetailsRequest(id) {
+        try {
+            let r = await ApiClient
+                .getClient(id)
+                .getResource();
+
+            let newState = {};
+            newState[id] = r.document;
+            this.setState({movies: {...this.state.movies, ...newState}});
+        }
+        catch (error) {
+            this.setState({errors: [...this.state.errors, error]});
+        }
+    }
+
+    renderMovieDetails(id) {
+        const movie = this.state.movies[id];
         return (
-            <p className="App-intro">
-                To get started, edit <code>src/App.js</code> and save to reload.
-            </p>
+            <div>
+                {!movie && <button onClick={() => this.onMovieDetailsRequest(id)}>Get movie details</button>}
+                {!!movie && <span>{movie.name}</span>}
+            </div>
+        );
+    }
+
+    renderMovies(movies) {
+        return (
+            <ul>
+                {movies.map(m => <li key={m}>{m} - {this.renderMovieDetails(m)}</li>)}
+            </ul>
+        );
+    }
+
+    render() {
+        const {movies, errors} = this.state;
+
+        return (
+            <div>
+                {!movies.collection.length && <button onClick={() => this.onMoviesRequest()}>Get movies list</button>}
+                {movies.collection.length > 0 && this.renderMovies(movies.collection)}
+                <div>
+                    {errors.map((e, index) => <div key={index}>{e.message}</div>)}
+                </div>
+            </div>
         );
     }
 }
