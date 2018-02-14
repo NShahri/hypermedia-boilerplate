@@ -17,13 +17,13 @@ function getRootHandler(req, res, next, server) {
     return next();
 }
 
-export default function setupRoutes(server) {
-    server.get(
+export default function setupRoutes(router) {
+    router.get(
         {name: RouteNames.root, path: '/'},
         authProvider,
         cacheConnector(cachePolicy.apiRootCachePolicy),
         contextConnector(getRootHandler));
 
-    registerMovieRoutes(server);
-    registerHealthRoutes(server);
+    registerMovieRoutes(router);
+    registerHealthRoutes(router);
 }

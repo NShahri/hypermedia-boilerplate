@@ -19,8 +19,8 @@ const pingHandler = (req, res, next, server) => {
     return next();
 };
 
-export default function registerRoutes(server) {
-    server.get(
+export default function registerRoutes(router) {
+    router.get(
         {name: RouteNames.health, path: '/health'},
         cacheConnector(cachePolicy.publicVeryShortCachePolicy),
         contextConnector(pingHandler));
