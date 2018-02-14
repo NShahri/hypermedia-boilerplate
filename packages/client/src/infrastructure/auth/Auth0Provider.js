@@ -13,15 +13,69 @@ class Auth0Provider {
 
     /**
      * @private
-     * @type {{}}
+     * @type {?{}}
      */
-    authInfo = {
-        accessToken: null,
-        idToken: null,
-        expiresAt: null
-    };
+    authInfo = null;
 
     auth0 = null;
+
+    /**
+     * @private
+     */
+    getAuthInfo(){
+        const parseAuthInfo = authInfo => {
+            try {
+                if (authInfo) {
+                    return JSON.parse(authInfo);
+                }
+            }
+            catch (error) {
+                this.logger.warn({
+                    type: 'PARSE_AUTH_SESSION_ERROR',
+                    authSession: authInfo,
+                    error
+                }, 'Can not parse saved auth session');
+            }
+
+            return {};
+        };
+
+        if(!this.authInfo){
+            this.authInfo = parseAuthInfo(sessionStorage.authInfo);
+        }
+
+        return this.authInfo;
+    }
+
+    /**
+     * @private
+     * @param authResult
+     */
+    setAuthInfo(authResult) {
+        if (authResult) {
+            this.authInfo = {
+                ...this.authInfo,
+                accessToken: authResult.accessToken,
+                idToken: authResult.idToken,
+                expiresAt: authResult.expiresIn * 1000 + new Date().getTime()
+            };
+
+            this.logger.debug({
+                type: 'NEW_AUTH_SESSION',
+                idToken: this.authInfo.idToken,
+                expiresAt: this.authInfo.expiresAt
+            }, 'New auth session provided.');
+        }
+        else {
+            this.authInfo = {};
+
+            this.logger.debug({
+                type: 'REMOVE_AUTH_SESSION'
+            }, 'Auth session is deleted.');
+        }
+
+        sessionStorage.authInfo = JSON.stringify(this.authInfo);
+    }
 
     /**
      * @private
@@ -36,18 +90,8 @@ class Auth0Provider {
 
     /**
      * @private
-     * @param authResult
      */
-    setSession(authResult) {
-        this.authInfo = {
-            ...this.authInfo,
-            accessToken: authResult.accessToken,
-            idToken: authResult.idToken,
-            expiresAt: authResult.expiresIn * 1000 + new Date().getTime()
-        };
 
-        this.logger.debug({type: 'NEW_AUTH_SESSION', idToken: this.authInfo.idToken, expiresAt: this.authInfo.expiresAt}, 'New auth session provided.');
-    }
 
     /**
      * @private
@@ -56,9 +100,10 @@ class Auth0Provider {
      */
     parseSession(err, authResult) {
         if (authResult && authResult.accessToken && authResult.idToken) {
-            this.setSession(authResult);
+            this.setAuthInfo(authResult);
             return true;
         } else {
+            this.setAuthInfo(null);
             return false;
         }
     }
@@ -68,12 +113,7 @@ class Auth0Provider {
     }
 
     logout() {
-        this.authInfo = {
-            ...this.authInfo,
-            accessToken: null,
-            idToken: null,
-            expiresAt: null
-        };
+        this.setAuthInfo(null);
     }
 
     refresh() {
@@ -85,7 +125,9 @@ class Auth0Provider {
     }
 
     isAuthenticated() {
-        return this.authInfo.expiresAt ? new Date().getTime() < this.authInfo.expiresAt : false;
+        const authInfo = this.getAuthInfo();
+
+        return (authInfo && authInfo.expiresAt) ? new Date().getTime() < authInfo.expiresAt : false;
     }
 
     signInRedirectCallback() {
