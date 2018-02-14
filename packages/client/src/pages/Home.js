@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ApiClient from '../apiClient';
+import {translate, Trans} from 'react-i18next';
 
 class Home extends Component {
 
@@ -44,7 +45,15 @@ class Home extends Component {
         const movie = this.state.movies[id];
         return (
             <div>
-                {!movie && <button onClick={() => this.onMovieDetailsRequest(id)}>Get movie details</button>}
+                {
+                    !movie
+                    &&
+                    <button onClick={() => this.onMovieDetailsRequest(id)}>
+                        <Trans i18nKey="movies.getDetails">
+                            Get movie details
+                        </Trans>
+                    </button>
+                }
                 {!!movie && <span>{movie.name}</span>}
             </div>
         );
@@ -63,7 +72,15 @@ class Home extends Component {
 
         return (
             <div>
-                {!movies.collection.length && <button onClick={() => this.onMoviesRequest()}>Get movies list</button>}
+                {
+                    !movies.collection.length
+                    &&
+                    <button onClick={() => this.onMoviesRequest()}>
+                        <Trans i18nKey="movies.getList">
+                            Get movies list
+                        </Trans>
+                    </button>
+                }
                 {movies.collection.length > 0 && this.renderMovies(movies.collection)}
                 <div>
                     {errors.map((e, index) => <div key={index}>{e.message}</div>)}
@@ -75,4 +92,4 @@ class Home extends Component {
 
 Home.propTypes = {};
 
-export default Home;
+export default translate()(Home);

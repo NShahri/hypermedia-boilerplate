@@ -1,0 +1,9 @@
+{
+  "movies": {
+    "getList": "Get movies",
+    "getDetails": "Get movie details"
+  },
+  "header": {
+    "welcome": "Welcome to this boilerplate app"
+  }
+}
