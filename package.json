@@ -4,6 +4,7 @@
   "author": "Nima Shahri",
   "main": "./packages/client/src/index",
   "license": "MIT",
+  "private": true,
   "workspaces": [
     "packages/*"
   ]
