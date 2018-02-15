@@ -35,7 +35,7 @@ const getMovieHandler = (req, res, next, server) => {
     return next(new ResourceNotFoundError('Not found'));
 };
 
-export default function registerRoutes(router) {
+export default function registerMovieRoutes(router) {
 
     router.get(
         {name: RouteNames.movies, path: '/movie'},

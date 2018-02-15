@@ -19,7 +19,7 @@ const pingHandler = (req, res, next, server) => {
     return next();
 };
 
-export default function registerRoutes(router) {
+export default function registerHealthRoutes(router) {
     router.get(
         {name: RouteNames.health, path: '/health'},
         cacheConnector(cachePolicy.publicVeryShortCachePolicy),
