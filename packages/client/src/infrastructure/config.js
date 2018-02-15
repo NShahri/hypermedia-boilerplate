@@ -2,6 +2,8 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 export default {
     appName: 'hypermedia-client',
+    appVersion: '0.0.0',
+
     logLevel: 'trace',
 
     authConfig: {

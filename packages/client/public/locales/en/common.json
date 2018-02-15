@@ -4,6 +4,7 @@
     "getDetails": "Get movie details"
   },
   "header": {
-    "welcome": "Welcome to this boilerplate app"
+    "welcome": "Welcome to this <1><0>boilerplate</0></1> app. release number: <3><0>{{appVersion}}</0></3>.",
+    "welcome_plural": "Welcome to these <1><0>boilerplate</0></1> apps. release number: <3><0>{{appVersion}}</0></3>."
   }
 }

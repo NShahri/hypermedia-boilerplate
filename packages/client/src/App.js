@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import AppRoutes from './pages/Routes'
 import {I18nextProvider, Trans, translate} from 'react-i18next';
+import config from "./infrastructure/config";
 
 class App extends Component {
     render() {
@@ -14,8 +15,11 @@ class App extends Component {
                     <header className="App-header">
                         <img src={logo} className="App-logo" alt="logo"/>
                         <h1 className="App-title">
-                            <Trans i18nKey="header.welcome">
-                                Welcome to React
+                            <Trans i18nKey="header.welcome" count={100}>
+                                Welcome to
+                                <span><strong>React App</strong></span>
+                                . version:
+                                <a href="https://reactjs.org/">{{appVersion: config.appVersion}}</a>
                             </Trans>
                         </h1>
                     </header>
