@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "auth0-js": "^9.2.1",
+    "bunyan": "^1.8.12",
     "i18next": "^10.3.0",
     "i18next-browser-languagedetector": "^2.1.0",
     "i18next-locize-backend": "^1.2.1",
