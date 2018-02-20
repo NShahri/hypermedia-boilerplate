@@ -7,10 +7,10 @@ export default {
     logLevel: 'trace',
 
     authConfig: {
-        domain: 'hypermedia-boilerplate.auth0.com',
-        clientID: 'oGiNJNM0y4w9JF-qT2caBaKyjo4mG3E_',
-        redirectUri: 'http://localhost:3000/callback',
-        audience: 'http://localhost:8080/',
+        domain: process.env.REACT_APP_AUTH_DOMAIN,
+        clientID: process.env.REACT_APP_AUTH_CLIENT_ID,
+        redirectUri: process.env.REACT_APP_AUTH_CALLBACK,
+        audience: process.env.REACT_APP_API_URL,
         responseType: 'token id_token',
 
         //
@@ -19,5 +19,12 @@ export default {
         scope: 'openid'
     },
 
-    isProduction: isProduction
+    isProduction: isProduction,
+
+    getApiUrlFromPage() {
+        return document
+            .querySelectorAll('link[rel=api]')[0]
+            .href;
+
+    }
 }

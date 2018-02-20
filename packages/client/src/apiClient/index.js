@@ -1,12 +1,6 @@
 import authProvider from "../infrastructure/authProvider";
 import traverson, {CollectionJsonAdapter} from "./CollectionJsonAdapter";
-
-function getApiUrlFromPage() {
-    return document
-        .querySelectorAll('link[rel=api]')[0]
-        .href;
-
-}
+import config from "../infrastructure/config";
 
 class ApiClient {
     constructor(rest) {
@@ -42,7 +36,7 @@ class ApiClient {
      */
     static clients = {};
 
-    static getClient(apiUrl = getApiUrlFromPage()) {
+    static getClient(apiUrl = config.getApiUrlFromPage()) {
         if (!ApiClient.clients[apiUrl]) {
             ApiClient.clients[apiUrl] = new ApiClient(traverson
                 .from(apiUrl)
