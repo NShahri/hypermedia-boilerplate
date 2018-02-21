@@ -18,10 +18,10 @@ const authProvider = (req, res, next) => {
             cache: true,
             rateLimit: true,
             jwksRequestsPerMinute: 5,
-            jwksUri: "https://hypermedia-boilerplate.auth0.com/.well-known/jwks.json"
+            jwksUri: config.authConfig.jwksUri
         }),
-        audience: config.serverBaseUrl,
-        issuer: "https://hypermedia-boilerplate.auth0.com/",
+        audience: config.authConfig.audience,
+        issuer: config.authConfig.issuer,
         algorithms: ['RS256']
     })(req, res, newNext);
 };
